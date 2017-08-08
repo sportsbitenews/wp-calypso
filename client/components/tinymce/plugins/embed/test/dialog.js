@@ -21,7 +21,13 @@ describe( 'EmbedDialog', function() {
 	it( 'should render', function() {
 		const url = 'https://www.youtube.com/watch?v=JkOIhs2mHpc';
 		const wrapper = shallow(
-			<EmbedDialog embedUrl={ url } onCancel={ noop } onUpdate={ noop } translate={ identity } />
+			<EmbedDialog
+				embedUrl={ url }
+				siteId={ 5089392 }
+				onCancel={ noop }
+				onUpdate={ noop }
+				translate={ identity }
+			/>
 		);
 
 		assert.isFalse( wrapper.instance().props.isVisible );
@@ -36,6 +42,7 @@ describe( 'EmbedDialog', function() {
 		const wrapper = shallow(
 			<EmbedDialog
 				embedUrl={ originalUrl }
+				siteId={ 5089392 }
 				onCancel={ noop }
 				onUpdate={ noop }
 				translate={ identity }
@@ -71,6 +78,7 @@ describe( 'EmbedDialog', function() {
 		const wrapper = shallow(
 			<EmbedDialog
 				embedUrl={ originalUrl }
+				siteId={ 5089392 }
 				onCancel={ noop }
 				onUpdate={ onUpdate }
 				translate={ identity }
@@ -100,6 +108,7 @@ describe( 'EmbedDialog', function() {
 		const wrapper = shallow(
 			<EmbedDialog
 				embedUrl={ originalUrl }
+				siteId={ 5089392 }
 				onCancel={ noopSpy }
 				onUpdate={ onUpdate }
 				translate={ identity }
@@ -113,4 +122,8 @@ describe( 'EmbedDialog', function() {
 		assert.isTrue( noopSpy.called );
 		assert.strictEqual( currentUrl, originalUrl );
 	} );
+
+	// should test valid vs invalid embed urls? maybe only once get to preview PR -- maybe not
+	// update the preview when new url given (other PR)
+	// anything else new to test?
 } );
