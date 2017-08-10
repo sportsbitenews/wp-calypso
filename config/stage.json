@@ -35,6 +35,7 @@
 		"jetpack/api-cache": true,
 		"jetpack/happychat": true,
 		"jetpack_core_inline_update": true,
+		"jitms": false,
 		"login/magic-login": true,
 		"login/native-login-links": true,
 		"login/wp-login": true,
