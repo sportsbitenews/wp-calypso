@@ -160,7 +160,6 @@ const Layout = React.createClass( {
 				<QuerySites allSites />
 				<QueryPreferences />
 				{ <GuidedTours /> }
-				{ config.isEnabled( 'jitms' ) && <JITM /> }
 				{ config.isEnabled( 'nps-survey/notice' ) && <NpsSurveyNotice /> }
 				{ config.isEnabled( 'keyboard-shortcuts' ) ? <KeyboardShortcutsMenu /> : null }
 				{ this.renderMasterbar() }
@@ -170,6 +169,7 @@ const Layout = React.createClass( {
 				</div>
 				{ this.props.isOffline && <OfflineStatus /> }
 				<div id="content" className="layout__content">
+					{ config.isEnabled( 'jitms' ) && <JITM /> }
 					{ this.renderWelcome() }
 					<GlobalNotices
 						id="notices"
