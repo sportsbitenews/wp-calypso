@@ -20,6 +20,7 @@ import { recordEvent, recordStat } from 'lib/posts/stats';
 import EditorPublishButton, { getPublishButtonStatus } from 'post-editor/editor-publish-button';
 import Button from 'components/button';
 import EditorPostType from 'post-editor/editor-post-type';
+import HistoryButton from 'post-editor/editor-ground-control/history-button';
 import { NESTED_SIDEBAR_REVISIONS, NestedSidebarPropType } from 'post-editor/editor-sidebar/constants';
 
 export class EditorGroundControl extends PureComponent {
@@ -283,6 +284,7 @@ export class EditorGroundControl extends PureComponent {
 						</span>
 					}
 				</div>
+				<HistoryButton onClick={ this.onSaveButtonClick } />
 				{ this.renderGroundControlActionButtons() }
 			</Card>
 		);
