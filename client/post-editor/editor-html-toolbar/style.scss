@@ -85,6 +85,10 @@
 		width: 0;
 	}
 
+	&.has-active-drop-zone {
+		position: static; /* Allow the dropzone to overflow the toolbar and expand to fill the entire editor body */
+	}
+
 	.button {
 		border-right: 1px solid lighten( $gray, 30% );
 		color: darken( $gray, 20% );
