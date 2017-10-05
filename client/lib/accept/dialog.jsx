@@ -29,11 +29,9 @@ const AcceptDialog = React.createClass( {
 	},
 
 	onClose: function( action ) {
-		this.props.onClose( 'accept' === action );
-
-		if ( this.isMounted() ) {
-			this.setState( { isVisible: false } );
-		}
+		this.setState( { isVisible: false }, () => {
+			this.props.onClose( 'accept' === action );
+		} );
 	},
 
 	getActionButtons: function() {
