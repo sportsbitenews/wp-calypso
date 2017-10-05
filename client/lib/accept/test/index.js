@@ -49,11 +49,14 @@ describe( '#accept()', function() {
 
 	it( 'should clean up after itself once the prompt is closed', function( done ) {
 		accept( 'Are you sure?', function() {
-			process.nextTick( function() {
+			// HACK: This was originally called with `process.nextTick` instead of `setTimeout`
+			// For some reason, this test will not pass unless the timeout is greater than 198ms.
+			const timeout = 199;
+			setTimeout( function() {
 				expect( document.querySelector( '.accept-dialog' ) ).to.be.null;
 
 				done();
-			} );
+			}, timeout );
 		} );
 
 		document.querySelector( '.button.is-primary' ).click();
