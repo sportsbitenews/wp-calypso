@@ -21,6 +21,9 @@ const AssetsPlugin = require( 'assets-webpack-plugin' );
 const cacheIdentifier = require( './server/bundler/babel/babel-loader-cache-identifier' );
 const config = require( './server/config' );
 const UseMinifiedFiles = require( './server/bundler/webpack-plugins/use-minified-files' );
+const babelConfig = JSON.parse( fs.readFileSync( './.babelrc', { encoding: 'utf8' } ) );
+
+babelConfig.presets[ 0 ][ 1 ].modules = false;
 
 /**
  * Internal variables
@@ -55,14 +58,19 @@ function getAliasesForExtensions() {
 
 const babelLoader = {
 	loader: 'babel-loader',
-	options: {
-		cacheDirectory: path.join( __dirname, 'build', '.babel-client-cache' ),
-		cacheIdentifier: cacheIdentifier,
-		plugins: [ [
-			path.join( __dirname, 'server', 'bundler', 'babel', 'babel-plugin-transform-wpcalypso-async' ),
-			{ async: config.isEnabled( 'code-splitting' ) }
-		] ]
-	}
+	options: Object.assign(
+		{},
+		babelConfig,
+		{
+			babelrc: false,
+			cacheDirectory: path.join( __dirname, 'build', '.babel-client-cache' ),
+			cacheIdentifier: cacheIdentifier,
+			plugins: [ [
+				path.join( __dirname, 'server', 'bundler', 'babel', 'babel-plugin-transform-wpcalypso-async' ),
+				{ async: config.isEnabled( 'code-splitting' ) }
+			] ].concat( babelConfig.plugins )
+		}
+	)
 };
 
 // happypack is not compatible with windows: https://github.com/amireh/happypack/blob/caaed26eec1795d464ac4b66abd29e60343e6252/README.md#does-it-work-under-windows
