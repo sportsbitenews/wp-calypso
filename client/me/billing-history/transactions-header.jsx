@@ -16,7 +16,7 @@ import classNames from 'classnames';
 import tableRows from './table-rows';
 import eventRecorder from 'me/event-recorder';
 
-module.exports = React.createClass( {
+export default React.createClass( {
 	displayName: 'TransactionsHeader',
 
 	mixins: [ eventRecorder ],

@@ -58,4 +58,4 @@ const PrimaryDomainButton = React.createClass( {
 	},
 } );
 
-module.exports = PrimaryDomainButton;
+export default PrimaryDomainButton;

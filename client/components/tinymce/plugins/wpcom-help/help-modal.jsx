@@ -134,4 +134,4 @@ const HelpModal = React.createClass( {
 	},
 } );
 
-module.exports = HelpModal;
+export default HelpModal;

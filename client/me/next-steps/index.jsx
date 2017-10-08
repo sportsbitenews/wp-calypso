@@ -19,9 +19,10 @@ import productsValues from 'lib/products-values';
 import observe from 'lib/mixins/data-observe';
 import sitesFactory from 'lib/sites-list';
 const sites = sitesFactory();
+
 /* eslint-enable no-restricted-imports */
 
-module.exports = React.createClass( {
+export default React.createClass( {
 	displayName: 'NextSteps',
 
 	mixins: [ observe( 'trophiesData', 'sites' ) ],

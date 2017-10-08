@@ -28,7 +28,7 @@ import userUtilities from 'lib/user/utils';
 import constants from 'me/constants';
 import Notice from 'components/notice';
 
-module.exports = React.createClass( {
+export default React.createClass( {
 	displayName: 'ReauthRequired',
 
 	mixins: [ LinkedStateMixin, observe( 'twoStepAuthorization' ), eventRecorder ],

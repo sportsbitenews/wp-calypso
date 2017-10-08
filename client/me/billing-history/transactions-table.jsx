@@ -200,4 +200,4 @@ var TransactionsTable = React.createClass( {
 	},
 } );
 
-module.exports = TransactionsTable;
+export default TransactionsTable;

@@ -263,4 +263,4 @@ var RenderVisualizerMixin = {
 	},
 };
 
-module.exports = RenderVisualizerMixin;
+export default RenderVisualizerMixin;

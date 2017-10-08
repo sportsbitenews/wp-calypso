@@ -8,7 +8,7 @@ import { map } from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-module.exports = React.createClass( {
+export default React.createClass( {
 	displayName: 'ValidationErrorList',
 
 	propTypes: {

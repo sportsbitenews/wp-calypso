@@ -272,7 +272,7 @@ function createSitesComponent( context ) {
 	);
 }
 
-module.exports = {
+export default {
 	// Clears selected site from global redux state
 	noSite( context, next ) {
 		context.store.dispatch( setSelectedSiteId( null ) );

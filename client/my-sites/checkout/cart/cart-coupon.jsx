@@ -12,7 +12,7 @@ import React from 'react';
 import analytics from 'lib/analytics';
 import upgradesActions from 'lib/upgrades/actions';
 
-module.exports = React.createClass( {
+export default React.createClass( {
 	displayName: 'CartCoupon',
 
 	getInitialState: function() {

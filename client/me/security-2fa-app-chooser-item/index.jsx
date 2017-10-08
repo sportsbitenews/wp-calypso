@@ -13,7 +13,7 @@ const debug = debugFactory( 'calypso:me:security:2fa-app-chooser-item' );
  */
 import analytics from 'lib/analytics';
 
-module.exports = React.createClass( {
+export default React.createClass( {
 	displayName: 'Security2faAppChooserItem',
 
 	getInitialState: function() {

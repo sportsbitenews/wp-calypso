@@ -20,7 +20,7 @@ import twoStepAuthorization from 'lib/two-step-authorization';
 import Security2faBackupCodesList from 'me/security-2fa-backup-codes-list';
 import Notice from 'components/notice';
 
-module.exports = React.createClass( {
+export default React.createClass( {
 	displayName: 'Security2faBackupCodes',
 
 	mixins: [ eventRecorder ],

@@ -16,7 +16,7 @@ import { preventWidows } from 'lib/formatting';
 import EmptyContent from 'components/empty-content';
 import Button from 'components/button';
 
-module.exports = React.createClass( {
+export default React.createClass( {
 	displayName: 'MediaLibraryListPlanPromo',
 
 	propTypes: {

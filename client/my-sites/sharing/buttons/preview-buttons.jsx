@@ -18,7 +18,7 @@ import ResizableIframe from 'components/resizable-iframe';
 import previewWidget from './preview-widget';
 import touchDetect from 'lib/touch-detect';
 
-var SharingButtonsPreviewButtons = ( module.exports = React.createClass( {
+var SharingButtonsPreviewButtons = React.createClass( {
 	displayName: 'SharingButtonsPreviewButtons',
 
 	propTypes: {
@@ -268,4 +268,5 @@ var SharingButtonsPreviewButtons = ( module.exports = React.createClass( {
 			</div>
 		);
 	},
-} ) );
+} );
+export default SharingButtonsPreviewButtons;

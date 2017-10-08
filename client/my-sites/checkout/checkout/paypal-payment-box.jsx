@@ -29,7 +29,7 @@ import wp from 'lib/wp';
 
 const wpcom = wp.undocumented();
 
-module.exports = React.createClass( {
+export default React.createClass( {
 	displayName: 'PaypalPaymentBox',
 
 	getInitialState: function() {
