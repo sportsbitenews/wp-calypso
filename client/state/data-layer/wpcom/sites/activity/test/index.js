@@ -5,14 +5,16 @@
 import { expect } from 'chai';
 import deepFreeze from 'deep-freeze';
 import sinon from 'sinon';
+import { translate } from 'i18n-calypso';
 
 /**
  * Internal dependencies
  */
 import { handleActivityLogRequest, receiveActivityLogError, receiveActivityLog } from '..';
 import { ACTIVITY_LOG_UPDATE } from 'state/action-types';
-import { activityLogError, activityLogRequest } from 'state/activity-log/actions';
+import { activityLogRequest } from 'state/activity-log/actions';
 import { http } from 'state/data-layer/wpcom-http/actions';
+import { NOTICE_CREATE } from 'state/action-types';
 
 const SITE_ID = 77203074;
 
@@ -57,11 +59,6 @@ const SUCCESS_RESPONSE = deepFreeze( {
 	type: 'OrderedCollection',
 } );
 
-const ERROR_RESPONSE = deepFreeze( {
-	error: 'unknown_blog',
-	message: 'Unknown blog',
-} );
-
 describe( 'receiveActivityLog', () => {
 	it( 'should dispatch activity log update action', () => {
 		const dispatch = sinon.spy();
@@ -80,13 +77,31 @@ describe( 'receiveActivityLog', () => {
 describe( 'receiveActivityLogError', () => {
 	it( 'should dispatch activity log error action', () => {
 		const dispatch = sinon.spy();
-		receiveActivityLogError( { dispatch }, { siteId: SITE_ID }, ERROR_RESPONSE );
-		expect( dispatch ).to.have.been.calledWith(
-			activityLogError( SITE_ID, {
-				error: 'unknown_blog',
-				message: 'Unknown blog',
-			} )
-		);
+		receiveActivityLogError( { dispatch } );
+		expect( dispatch ).to.have.been.called.once;
+		expect( dispatch.args[ 0 ][ 0 ] )
+			.to.be.an( 'object' )
+			.that.has.keys( [ 'type', 'notice' ] )
+			.that.includes( {
+				type: NOTICE_CREATE,
+			} );
+		expect( dispatch.args[ 0 ][ 0 ].notice )
+			.to.be.an( 'object' )
+			.that.has.keys( [
+				'noticeId',
+				'duration',
+				'showDismiss',
+				'isPersistent',
+				'displayOnNextPage',
+				'status',
+				'text',
+				'button',
+				'href',
+				'onClick',
+			] )
+			.that.includes( {
+				text: translate( 'Error receiving activity for site.' ),
+			} );
 	} );
 } );
 
