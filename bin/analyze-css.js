@@ -6,7 +6,10 @@
 const execSync = require( 'child_process' ).execSync;
 const fs = require( 'fs-extra' );
 const glob = require( 'glob' );
+const pad = require( 'pad' );
 const path = require( 'path' );
+const prettyBytes = require( 'pretty-bytes' );
+const term = require( 'terminal-kit' ).terminal;
 
 /**
  * Constants
@@ -17,7 +20,7 @@ const DEBUG_BUNDLE = path.join( TEMP_DIRECTORY, 'assets', 'stylesheets', 'style.
 const NODE_SASS = path.join( PROJECT_DIRECTORY, 'node_modules', 'node-sass', 'bin', 'node-sass' );
 
 /**
- * Functions
+ * Analyzing Functions
  */
 const extractRuleFromFragment = ( fragment ) => {
 	const lines = fragment.split( '\n' );
@@ -39,12 +42,12 @@ const extractRuleFromFragment = ( fragment ) => {
 			} else {
 				const [ , file ] = source;
 
-				return Object.assign( result, { file } );
+				return Object.assign( {}, result, { file } );
 			}
 		} else {
 			const content = result.content + `\n${ line }`;
 
-			return Object.assign( result, { content: content.trim() } );
+			return Object.assign( {}, result, { content: content.trim() } );
 		}
 	}, { content: '' } );
 };
@@ -82,6 +85,9 @@ const normalizePath = ( file ) => {
 	return path.join( TEMP_DIRECTORY, newFile );
 };
 
+/**
+ * Analyzing
+ */
 console.log( `> Cleaning up ${ TEMP_DIRECTORY } directory` );
 
 fs.removeSync( TEMP_DIRECTORY );
@@ -130,3 +136,131 @@ rules.forEach( ( content, file ) => {
 	fs.ensureFileSync( file );
 	fs.writeFileSync( file, content );
 } );
+
+/**
+ * Rendering Functions
+ */
+const Folder = ( path, index = 0 ) => {
+	return {
+		path,
+		items: getItems( path ),
+		index
+	};
+};
+
+const getDirectorySize = ( directory ) => {
+	return fs.readdirSync( directory ).reduce( ( size, item ) => {
+		return size + getItemSize( path.resolve( directory, item ) );
+	}, 0 );
+};
+
+const getItemSize = ( item ) => {
+	const stats = fs.statSync( item );
+
+	if ( stats.isDirectory() ) {
+		return getDirectorySize( item );
+	} else {
+		return stats.size;
+	}
+};
+
+const getItems = ( directory ) => {
+	let maximumSize = 0;
+
+	const items = fs.readdirSync( directory ).map( item => {
+		let size = getItemSize( path.resolve( directory, item ) );
+
+		maximumSize = Math.max( maximumSize, size );
+
+		return {
+			name: item,
+			size
+		};
+	} ).sort( ( a, b ) => {
+		return b.size - a.size;
+	} );
+
+	return items.map( item => {
+		return Object.assign( {}, item, {
+			percentage: Math.round( item.size / maximumSize * 100 )
+		} );
+	} );
+};
+
+const getMenu = ( folder, maximumNumberOfItems ) => {
+	return folder.items.slice( 0, maximumNumberOfItems - 1 ).map( ( { name, percentage, size } ) => {
+		const percentageBar = pad( '#'.repeat( Math.round( percentage / 10 ) ), 10 );
+
+		return `${ pad( 10, prettyBytes( size ) ) } [${ percentageBar }] /${ name }`;
+	} );
+};
+
+const isProjectPath = ( directory ) => {
+	const relativePath = path.relative( PROJECT_DIRECTORY, directory );
+
+	return Boolean( relativePath ) && !relativePath.startsWith( '..' ) && !path.isAbsolute( relativePath );
+};
+
+const padLine = ( text, char = ' ' ) => {
+	return `${ pad( text, term.width, { char } ) }\n`;
+};
+
+/**
+ * Rendering
+ */
+let current = Folder( TEMP_DIRECTORY ), menu;
+
+const render = () => {
+	term.fullscreen();
+	term.inverse( padLine( `Use the arrow keys and BACKSPACE to navigate, ENTER to select, and ESC to quit` ) );
+	term("\n");
+	term.bold( padLine( `--- ${ current.path } `, '-' ) );
+
+	if ( menu ) {
+		menu.abort();
+	}
+
+	menu = term.singleColumnMenu(
+		getMenu( current, term.height - 4 ),
+		{ selectedIndex: current.index },
+		( error, { selectedIndex } ) => {
+			const selectedDirectory = current.items[ selectedIndex ].name;
+			const selectedPath = path.resolve( current.path, selectedDirectory );
+			const stats = fs.statSync( selectedPath );
+
+			if ( stats.isDirectory() ) {
+				current = Folder( selectedPath );
+			} else {
+				current.index = selectedIndex;
+
+				term.bell();
+			}
+
+			render();
+		} );
+};
+
+term.on( 'key', ( name ) => {
+	switch ( name ) {
+		case 'BACKSPACE':
+			const parentPath = path.dirname( current.path );
+
+			if ( isProjectPath( parentPath ) ) {
+				current = Folder( parentPath );
+
+				render();
+			} else {
+				term.bell();
+			}
+
+			break;
+
+		case 'ESCAPE':
+			term.clear();
+			term.processExit();
+
+			break;
+	}
+} );
+
+render();
