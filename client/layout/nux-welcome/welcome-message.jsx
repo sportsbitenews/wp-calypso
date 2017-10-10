@@ -19,7 +19,7 @@ function recordEvent( eventAction ) {
 	analytics.ga.recordEvent( 'Welcome Box', eventAction );
 }
 
-module.exports = localize(React.createClass( {
+export default localize(React.createClass( {
 	displayName: 'NuxWelcomeMessage',
 
 	analyticsEvents: {

@@ -146,7 +146,7 @@ var Team = localize(React.createClass( {
 	},
 } ));
 
-module.exports = localize(React.createClass( {
+export default localize(React.createClass( {
 	displayName: 'TeamList',
 
 	render: function() {

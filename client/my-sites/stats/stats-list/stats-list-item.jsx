@@ -23,7 +23,7 @@ import titlecase from 'to-title-case';
 import analytics from 'lib/analytics';
 import Gridicon from 'gridicons';
 
-module.exports = localize(React.createClass( {
+export default localize(React.createClass( {
 	displayName: 'StatsListItem',
 
 	getInitialState: function() {

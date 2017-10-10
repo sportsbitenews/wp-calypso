@@ -244,7 +244,7 @@ const SwitcherShell = localize(React.createClass( {
 	},
 } ));
 
-module.exports = localize(React.createClass( {
+export default localize(React.createClass( {
 	displayName: 'AuthorSelector',
 	propTypes: {
 		siteId: PropTypes.number.isRequired,

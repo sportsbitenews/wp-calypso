@@ -15,7 +15,7 @@ import analytics from 'lib/analytics';
 import Gridicon from 'gridicons';
 import PluginsActions from 'lib/plugins/actions';
 
-module.exports = localize(React.createClass( {
+export default localize(React.createClass( {
 	displayName: 'PluginSiteUpdateIndicator',
 
 	propTypes: {

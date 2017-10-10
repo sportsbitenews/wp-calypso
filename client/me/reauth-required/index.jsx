@@ -29,7 +29,7 @@ import userUtilities from 'lib/user/utils';
 import constants from 'me/constants';
 import Notice from 'components/notice';
 
-module.exports = localize(React.createClass( {
+export default localize(React.createClass( {
 	displayName: 'ReauthRequired',
 
 	mixins: [ LinkedStateMixin, observe( 'twoStepAuthorization' ), eventRecorder ],

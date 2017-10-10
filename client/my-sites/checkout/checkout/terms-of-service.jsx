@@ -15,7 +15,7 @@ import analytics from 'lib/analytics';
 import support from 'lib/url/support';
 import Gridicon from 'gridicons';
 
-module.exports = localize(React.createClass( {
+export default localize(React.createClass( {
 	displayName: 'TermsOfService',
 
 	recordTermsAndConditionsClick: function() {

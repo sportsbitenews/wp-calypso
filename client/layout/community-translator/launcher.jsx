@@ -18,7 +18,7 @@ import localStorageHelper from 'store';
 import Dialog from 'components/dialog';
 import analytics from 'lib/analytics';
 
-module.exports = localize(React.createClass( {
+export default localize(React.createClass( {
 	displayName: 'TranslatorLauncher',
 
 	propTypes: {

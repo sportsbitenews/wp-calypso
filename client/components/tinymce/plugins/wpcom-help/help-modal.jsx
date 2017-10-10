@@ -135,4 +135,4 @@ const HelpModal = React.createClass( {
 	},
 } );
 
-module.exports = localize(HelpModal);
+export default localize(HelpModal);

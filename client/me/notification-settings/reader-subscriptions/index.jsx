@@ -30,7 +30,7 @@ import observe from 'lib/mixins/data-observe';
 import eventRecorder from 'me/event-recorder';
 import Main from 'components/main';
 
-module.exports = protectForm(
+export default protectForm(
 	localize(React.createClass( {
 		displayName: 'NotificationSubscriptions',
 

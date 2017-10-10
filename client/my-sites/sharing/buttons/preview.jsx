@@ -19,7 +19,7 @@ import ButtonsTray from './tray';
 import { decodeEntities } from 'lib/formatting';
 import analytics from 'lib/analytics';
 
-module.exports = localize(React.createClass( {
+export default localize(React.createClass( {
 	displayName: 'SharingButtonsPreview',
 
 	propTypes: {
