@@ -13,16 +13,16 @@ import React from 'react';
 
 jest.mock( 'components/plans/premium-popover', () => require( 'components/empty-component' ) );
 
-describe( 'Domain Suggestion', function() {
+describe( 'Domain Suggestion', () => {
 	let DomainSuggestion;
 
-	before( () => {
+	beforeAll( () => {
 		DomainSuggestion = require( 'components/domains/domain-suggestion' );
 		DomainSuggestion.prototype.translate = identity;
 	} );
 
 	describe( 'has attributes', () => {
-		it( 'should have data-e2e-domain attribute for e2e testing', () => {
+		test( 'should have data-e2e-domain attribute for e2e testing', () => {
 			const domainSuggestion = shallow(
 				<DomainSuggestion
 					buttonContent="Click Me"

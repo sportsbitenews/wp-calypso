@@ -37,27 +37,27 @@ const DUMMY_SITE = {
 	},
 };
 
-describe( 'EditorDiscussion', function() {
-	before( function() {
+describe( 'EditorDiscussion', () => {
+	beforeAll( function() {
 		EditorDiscussion.prototype.translate = sinon.stub().returnsArg( 0 );
 	} );
 
-	beforeEach( function() {
+	beforeEach( () => {
 		ReactDom.unmountComponentAtNode( document.body );
 	} );
 
-	after( function() {
+	afterAll( function() {
 		delete EditorDiscussion.prototype.translate;
 	} );
 
-	describe( '#getDiscussionSetting()', function() {
-		it( 'should return an empty object if both post and site are unknown', function() {
+	describe( '#getDiscussionSetting()', () => {
+		test( 'should return an empty object if both post and site are unknown', () => {
 			var tree = TestUtils.renderIntoDocument( <EditorDiscussion /> );
 
 			expect( tree.getDiscussionSetting() ).to.eql( {} );
 		} );
 
-		it( 'should return the site default comments open if site exists and post is new', function() {
+		test( 'should return the site default comments open if site exists and post is new', () => {
 			var site = {
 					options: {
 						default_comment_status: true,
@@ -77,7 +77,7 @@ describe( 'EditorDiscussion', function() {
 			} );
 		} );
 
-		it( 'should return the site default pings open if site exists and post is new', function() {
+		test( 'should return the site default pings open if site exists and post is new', () => {
 			var site = {
 					options: {
 						default_comment_status: false,
@@ -97,7 +97,7 @@ describe( 'EditorDiscussion', function() {
 			} );
 		} );
 
-		it( 'should return comments closed if site exists, post is new, and post is type page', function() {
+		test( 'should return comments closed if site exists, post is new, and post is type page', () => {
 			var site = {
 					options: {
 						default_comment_status: false,
@@ -117,7 +117,7 @@ describe( 'EditorDiscussion', function() {
 			} );
 		} );
 
-		it( 'should return the saved post values', function() {
+		test( 'should return the saved post values', () => {
 			var post = {
 					discussion: {
 						comment_status: 'open',
@@ -132,7 +132,7 @@ describe( 'EditorDiscussion', function() {
 		} );
 	} );
 
-	describe( '#onChange', function() {
+	describe( '#onChange', () => {
 		var post = {
 			discussion: {
 				comment_status: 'closed',
@@ -142,7 +142,7 @@ describe( 'EditorDiscussion', function() {
 			},
 		};
 
-		it( 'should include modified comment status on the post object', function() {
+		test( 'should include modified comment status on the post object', () => {
 			var tree, checkbox;
 
 			tree = TestUtils.renderIntoDocument(
@@ -169,7 +169,7 @@ describe( 'EditorDiscussion', function() {
 			} );
 		} );
 
-		it( 'should include modified ping status on the post object', function() {
+		test( 'should include modified ping status on the post object', () => {
 			var tree, checkbox;
 
 			tree = TestUtils.renderIntoDocument(
